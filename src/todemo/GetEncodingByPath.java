@@ -9,8 +9,8 @@ import java.io.File;
  * @author Juch
  * @date 2019/4/10 7:01
  */
-public class GetEncodingByPath {
-    public static String getEncodingByPath(String fileName) {
+class GetEncodingByPath {
+    static String getEncodingByPath(String fileName) {
         String fileEncoding = null;
         CodepageDetectorProxy detector = CodepageDetectorProxy.getInstance();
         /*
