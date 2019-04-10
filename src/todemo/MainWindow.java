@@ -1,6 +1,5 @@
 package todemo;
 
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -17,46 +16,42 @@ public class MainWindow extends JFrame implements ActionListener {
 
     public static void main(String[] args) {
         MainWindow window = new MainWindow("GBK to UTF-8");
-        //设置整个窗口居中显示
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        window.setBounds((screenSize.width - 450) / 2, (screenSize.height - 300) / 2, 450, 300);
+        window.setBounds((screenSize.width - 450) / 2, (screenSize.height - 350) / 2, 450, 350);
+        window.setResizable(false);
     }
 
     private JButton jButton1, jButton2;
     private JTextField textField = new JTextField("未选择路径", 50);
-    static JTextArea fileArea = new JTextArea("日志记录：", 5, 20);
-
+    static JTextArea fileArea = new JTextArea("");
 
     private MainWindow(String s) {
-        Box baseBox, boxV1, boxV2;
-
         setTitle(s);
-
-        boxV1 = Box.createVerticalBox();
-        boxV1.add(Box.createVerticalStrut(8));
-
-        jButton1 = new JButton("浏览");
-        jButton2 = new JButton("转码");
-        jButton2.setBounds(400, 500, 300, 200);
-        boxV2 = Box.createVerticalBox();
-        boxV2.add(textField);
-
-        baseBox = Box.createHorizontalBox();
-        baseBox.add(boxV1);
-        baseBox.add(boxV2);
-        baseBox.add(jButton1);
-        jButton1.addActionListener(this);
-
-        add(jButton2);
-        jButton2.addActionListener(this);
-        add(baseBox, BorderLayout.NORTH);
-        add(fileArea, BorderLayout.CENTER);
-        add(jButton2, BorderLayout.SOUTH);
-        validate();
-        setVisible(true);
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-
-
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//默认退出
+        JPanel contentPane = new JPanel();//初始化面板
+        contentPane.setLayout(null);//设置布局NULL
+        this.jButton1 = new JButton("浏览");//给按钮名字
+        this.jButton1.setBounds(335, 5, 94, 30);//设置按钮规格
+        jButton1.setBackground(Color.WHITE);
+        this.textField.setText("未选择路径");
+        this.textField.setBounds(10, 5, 320, 30);
+        contentPane.add(textField);
+        JScrollPane scroll = new JScrollPane(fileArea);
+        scroll.setBounds(10, 45, 420, 200);
+        contentPane.add(scroll);
+        fileArea.setText("\t\t警告：\n本次转码将覆盖原文件，转码前请做好原文件的备份，请勿重复转码！！\n\n已转换的文件：");
+        fileArea.setBounds(10, 45, 420, 200);
+        fileArea.setLineWrap(true);
+        scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        contentPane.add(jButton1);//加入面板中
+        this.jButton1.addActionListener(this);
+        this.jButton2 = new JButton("转码");
+        jButton2.setBackground(Color.WHITE);
+        this.jButton2.addActionListener(this);
+        contentPane.add(jButton2);
+        this.jButton2.setBounds(137, 260, 150, 40);
+        this.add(contentPane);
+        this.setVisible(true);
     }
 
     @Override
@@ -73,7 +68,6 @@ public class MainWindow extends JFrame implements ActionListener {
             }
         }
         if (e.getSource() == jButton2) {
-            //点击转换按钮的响应处理，转换gbk的内容写粘贴在下面的空白区
             try {
                 new GbkToUtf8(new File(textField.getText()));
             } catch (IOException ex) {
