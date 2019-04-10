@@ -1,4 +1,6 @@
-package todemo;
+package uidmeo;
+
+import todemo.GbkToUtf8;
 
 import javax.swing.*;
 import java.io.File;
