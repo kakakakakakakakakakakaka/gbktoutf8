@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.regex.Pattern;
 
 /**
  * @author Juch
@@ -68,10 +69,15 @@ public class MainWindow extends JFrame implements ActionListener {
             }
         }
         if (e.getSource() == jButton2) {
-            try {
-                new GbkToUtf8(new File(textField.getText()));
-            } catch (IOException ex) {
-                ex.printStackTrace();
+            if (!Pattern.matches("^\\w", textField.getText().substring(0, 1))) {
+                JOptionPane.showMessageDialog(null, "错误的路径");
+            } else {
+                try {
+                    new GbkToUtf8(new File(textField.getText()));
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+                JOptionPane.showMessageDialog(null, "转码完成，请勿重复转码！！");
             }
         }
     }

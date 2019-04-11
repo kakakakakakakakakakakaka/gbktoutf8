@@ -37,7 +37,6 @@ class GbkToUtf8 {
                 new GbkToUtf8(fileName);
             }
         }
-        sb.append("编码转换完成切勿重复操作!!");
         fileArea.setText(sb.toString());
     }
 }
