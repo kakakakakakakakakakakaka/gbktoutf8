@@ -1,7 +1,9 @@
 package todemo;
 
 import java.io.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import static todemo.FileList.fileList;
 import static todemo.GetEncodingByPath.getEncodingByPath;
@@ -36,6 +38,11 @@ class GbkToUtf8 {
             for (String fileName : fileList) {
                 new GbkToUtf8(fileName);
             }
+        }
+        if (sb.lastIndexOf("件") == sb.length() - 1) {
+            sb.append("没有要转换的文件").append("\n");
+        } else {
+            sb.append(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())).append("\n");
         }
         fileArea.setText(sb.toString());
     }

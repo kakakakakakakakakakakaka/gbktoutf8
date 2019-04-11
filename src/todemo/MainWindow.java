@@ -1,6 +1,7 @@
 package todemo;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileSystemView;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,50 +23,48 @@ public class MainWindow extends JFrame implements ActionListener {
         window.setResizable(false);
     }
 
-    private JButton jButton1, jButton2;
+    private JButton jButton1 = new JButton("浏览"), jButton2 = new JButton("转码");
     private JTextField textField = new JTextField("未选择路径", 50);
-    static JTextArea fileArea = new JTextArea("");
+    static JTextArea fileArea = new JTextArea("\t\t警告：\n本次转码将覆盖原文件，转码前请做好原文件的备份，请勿重复转码！！\n\n已转换的文件：");
 
     private MainWindow(String s) {
         setTitle(s);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//默认退出
-        JPanel contentPane = new JPanel();//初始化面板
-        contentPane.setLayout(null);//设置布局NULL
-        this.jButton1 = new JButton("浏览");//给按钮名字
-        this.jButton1.setBounds(335, 5, 94, 30);//设置按钮规格
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //默认退出
+        JPanel contentPane = new JPanel();
+        //初始化面板
+        contentPane.setLayout(null);
+        //设置布局NULL
+        jButton1.setBounds(335, 5, 94, 30);
+        jButton2.setBounds(137, 260, 150, 40);
+        textField.setBounds(10, 5, 320, 30);
+        fileArea.setBounds(10, 45, 420, 200);
         jButton1.setBackground(Color.WHITE);
-        this.textField.setText("未选择路径");
-        this.textField.setBounds(10, 5, 320, 30);
-        contentPane.add(textField);
+        jButton2.setBackground(Color.WHITE);
+        fileArea.setLineWrap(true);
         JScrollPane scroll = new JScrollPane(fileArea);
         scroll.setBounds(10, 45, 420, 200);
-        contentPane.add(scroll);
-        fileArea.setText("\t\t警告：\n本次转码将覆盖原文件，转码前请做好原文件的备份，请勿重复转码！！\n\n已转换的文件：");
-        fileArea.setBounds(10, 45, 420, 200);
-        fileArea.setLineWrap(true);
         scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        contentPane.add(jButton1);//加入面板中
-        this.jButton1.addActionListener(this);
-        this.jButton2 = new JButton("转码");
-        jButton2.setBackground(Color.WHITE);
-        this.jButton2.addActionListener(this);
+        contentPane.add(textField);
+        contentPane.add(jButton1);
         contentPane.add(jButton2);
-        this.jButton2.setBounds(137, 260, 150, 40);
-        this.add(contentPane);
-        this.setVisible(true);
+        contentPane.add(scroll);
+        jButton1.addActionListener(this);
+        jButton2.addActionListener(this);
+        add(contentPane);
+        setVisible(true);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == jButton1) {
-            textField.setText(null);
-            JFileChooser fc = new JFileChooser("C:\\");
+            JFileChooser fc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+//            默认打开路径为桌面
             fc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
             int val = fc.showOpenDialog(null);
             if (val == JFileChooser.APPROVE_OPTION) {
                 textField.setText(fc.getSelectedFile().toString());
-            } else {
-                textField.setText("未选择路径");
+                fileArea.setText("\t\t警告：\n本次转码将覆盖原文件，转码前请做好原文件的备份，请勿重复转码！！\n\n已转换的文件：");
             }
         }
         if (e.getSource() == jButton2) {
