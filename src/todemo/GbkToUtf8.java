@@ -7,7 +7,7 @@ import java.util.Date;
 
 import static todemo.FileList.fileList;
 import static todemo.GetEncodingByPath.getEncodingByPath;
-import static todemo.MainWindow.fileArea;
+import static todemo.MainWindow.textArea;
 import static todemo.ToUTF8.toUTF8;
 
 /**
@@ -44,6 +44,6 @@ class GbkToUtf8 {
         } else {
             sb.append(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())).append("\n");
         }
-        fileArea.setText(sb.toString());
+        textArea.setText(sb.toString());
     }
 }

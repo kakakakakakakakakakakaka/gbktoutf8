@@ -19,13 +19,13 @@ public class MainWindow extends JFrame implements ActionListener {
     public static void main(String[] args) {
         MainWindow window = new MainWindow("GBK to UTF-8");
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        window.setBounds((screenSize.width - 450) / 2, (screenSize.height - 350) / 2, 450, 350);
+        window.setBounds((screenSize.width - 450) / 2, (screenSize.height - 350) / 2, 445, 350);
         window.setResizable(false);
     }
 
     private JButton jButton1 = new JButton("浏览"), jButton2 = new JButton("转码");
-    private JTextField textField = new JTextField("未选择路径", 50);
-    static JTextArea fileArea = new JTextArea("\t\t警告：\n本次转码将覆盖原文件，转码前请做好原文件的备份，请勿重复转码！！\n\n已转换的文件：");
+    private JTextField textField = new JTextField("转换路径可以设置为\"目录\"或者\"文件\"", 50);
+    static JTextArea textArea = new JTextArea("本次转码将覆盖原文件，转码前请做好原文件的备份，请勿重复转码！！\n\n已转换的文件：");
 
     private MainWindow(String s) {
         setTitle(s);
@@ -35,14 +35,19 @@ public class MainWindow extends JFrame implements ActionListener {
         //初始化面板
         contentPane.setLayout(null);
         //设置布局NULL
-        jButton1.setBounds(335, 5, 94, 30);
+        jButton1.setBounds(335, 10, 94, 30);
         jButton2.setBounds(137, 260, 150, 40);
-        textField.setBounds(10, 5, 320, 30);
-        fileArea.setBounds(10, 45, 420, 200);
+        textField.setBounds(10, 10, 320, 30);
+        textArea.setBounds(10, 55, 420, 200);
+        textField.setFont(new Font("", Font.BOLD, 12));
+        textArea.setFont(new Font("", Font.PLAIN, 15));
+        textField.setEditable(false);
+        textArea.setEditable(false);
+//        禁止用户编辑文本框
         jButton1.setBackground(Color.WHITE);
         jButton2.setBackground(Color.WHITE);
-        fileArea.setLineWrap(true);
-        JScrollPane scroll = new JScrollPane(fileArea);
+        textArea.setLineWrap(true);
+        JScrollPane scroll = new JScrollPane(textArea);
         scroll.setBounds(10, 45, 420, 200);
         scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         contentPane.add(textField);
@@ -64,7 +69,7 @@ public class MainWindow extends JFrame implements ActionListener {
             int val = fc.showOpenDialog(null);
             if (val == JFileChooser.APPROVE_OPTION) {
                 textField.setText(fc.getSelectedFile().toString());
-                fileArea.setText("\t\t警告：\n本次转码将覆盖原文件，转码前请做好原文件的备份，请勿重复转码！！\n\n已转换的文件：");
+                textArea.setText("本次转码将覆盖原文件，转码前请做好原文件的备份，请勿重复转码！！\n\n已转换的文件：");
             }
         }
         if (e.getSource() == jButton2) {
